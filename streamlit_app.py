@@ -44,6 +44,7 @@ if ingredients_list:
 
             # Display as dataframe
             st.dataframe(data=fruit_data, use_container_width=True)
+            st.stop()
 
         except Exception as e:
             # If fruit not found or API fails

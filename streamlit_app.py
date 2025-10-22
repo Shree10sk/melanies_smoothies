@@ -42,6 +42,8 @@ if ingredients_list:
 
         # Display fruit name as subheader
         st.subheader(f"{fruit_chosen} Nutrition Information")
+        smoothiefroot_response = requests.get(
+                "https://my.smoothiefroot.com/api/fruit/(search_on)")
 
         # Get nutrition info from Smoothiefroot API using SEARCH_ON
         try:

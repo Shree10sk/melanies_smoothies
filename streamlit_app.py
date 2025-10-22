@@ -46,7 +46,7 @@ if ingredients_list:
         # Get nutrition info from Smoothiefroot API using SEARCH_ON
         try:
             smoothiefroot_response = requests.get(
-                "https://my.smoothiefroot.com/api/fruit/" + search_on
+                f"https://my.smoothiefroot.com/api/fruit/{search_on}"
             )
             smoothiefroot_response.raise_for_status()  # Check if response is OK
             fruit_data = smoothiefroot_response.json()

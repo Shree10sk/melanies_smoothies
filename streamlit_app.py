@@ -43,13 +43,16 @@ if ingredients_list:
         # Display fruit name as subheader
         st.subheader(f"{fruit_chosen} Nutrition Information")
 
-        # Get nutrition info from Smoothiefroot API
+       
+           # 🍎 Get nutrition info from Smoothiefroot API
         try:
-            smoothiefroot_response = requests.get(
-                "https://my.smoothiefroot.com/api/fruit/" + search_on
-            )
+            api_url = "https://my.smoothiefroot.com/api/fruit/" + search_on.strip()
+            st.write(f"🔍 Fetching: {api_url}")   # 👈 debug line
+
+            smoothiefroot_response = requests.get(api_url)
             smoothiefroot_response.raise_for_status()
             fruit_data = smoothiefroot_response.json()
+
 
             # ✅ Display nutrition info cleanly
             if "nutritions" in fruit_data:

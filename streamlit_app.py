@@ -15,9 +15,11 @@ cnx = st.connection("snowflake")
 session = cnx.session()
 
 # 🍉 Get fruit options from Snowflake
-my_dataframe = session.table("smoothies.public.fruit_options").to_pandas()
+my_dataframe = session.table("smoothies.public.fruit_options").selecct(col('FRUIT_NAME'),col('SEARCH_ON))
+st.dataframe(data=fruit_data, use_container_width=True)
+st.stop()
 
-# 🍍 Let user select up to 5 fruits
+                                                                                             # 🍍 Let user select up to 5 fruits
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:',
     my_dataframe['FRUIT_NAME'],
@@ -42,9 +44,7 @@ if ingredients_list:
             smoothiefroot_response.raise_for_status()  # Check if response is OK
             fruit_data = smoothiefroot_response.json()
 
-            # Display as dataframe
-            st.dataframe(data=fruit_data, use_container_width=True)
-            st.stop()
+           
 
         except Exception as e:
             # If fruit not found or API fails

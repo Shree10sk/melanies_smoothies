@@ -11,19 +11,24 @@ cnx = st.connection("snowflake")
 session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").to_pandas()
 
-# ✅ Use the correct column name here
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:',
-    my_dataframe['FRUIT_NAME'],   # change this if your column name differs
+    my_dataframe['FRUIT_NAME'],
     max_selections=5
 )
 
 if ingredients_list:
     ingredients_string = ' '.join(ingredients_list)
 
-    my_insert_stmt = f"""
-        INSERT INTO smoothies.public.orders (ingredients, name_on_order)
-        VALUES ('{ingredients_string}', '{name_on_order}')
-    """
-
     time_to_insert = st.button('Submit Order')
+
+    if time_to_insert:
+        # insert the order into Snowflake
+        my_insert_stmt = f"""
+            INSERT INTO smoothies.public.orders (ingredients, name_on_order)
+            VALUES ('{ingredients_string}', '{name_on_order}')
+        """
+        session.sql(my_insert_stmt).collect()
+
+        # ✅ show success message with green tick
+        st.success(f"✅ Your smoothie is ordered, {name_on_order}!")
